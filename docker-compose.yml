@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql:5.7
+    volumes:
+      - .:/app/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: new_base
+    ports:
+      - 3308:3306
+      
+  web:
+    build: ./
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/app/app12
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+

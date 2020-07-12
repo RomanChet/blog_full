@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Название:</strong>
+  <%= @article.name %>
+</p>
+
+<p>
+  <strong>Тест:</strong>
+  <%= @article.body %>
+</p>
+
+<h2>Комментарии</h2>
+<% @article.comments.each do |comment| %>
+  <p>
+    <strong>Автор:</strong>
+    <%= comment.name %>
+  </p>
+
+  <p>
+    <strong>Комментарий:</strong>
+    <%= comment.body %>
+  </p>
+  <p>
+    <%= link_to 'Удалить комментарий', [comment.article, comment],
+                 method: :delete,
+                 data: { confirm: 'Вы уверены?' } %>
+  </p>
+<% end %>
+
+
+<h2>Оставить комментарий:</h2>
+<%= form_with(model: [ @article, @article.comments.build ], local: true) do |form| %>
+  <p>
+    <%= form.label :Автор %><br>
+    <%= form.text_field :name %>
+  </p>
+  <p>
+    <%= form.label :Текст %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Изменить', edit_article_path(@article) %> |
+<%= link_to 'Назад', articles_path %>
